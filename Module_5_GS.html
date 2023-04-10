@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <h1> <font color="blue"> Data 608 - Module 5 </font></h1>
+        <h2>Gabriel Santos - 04/14/2023</h2>
+        <script type="text/javascript"></script>
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+        <script src="https://d3js.org/d3.v5.min.js"></script>
+    </head>
+    <br>
+    <body>
+    <h3> <font color="blue"> 1. Reverse a word </font></h3>
+    <p1> Please enter a Word and click Reverse</p1>
+    <script type="text/javascript">
+    function reverse(str){
+        var splitString = str.split("");
+        var reverseArray = splitString.reverse();
+        var joinArray = reverseArray.join("");
+        return joinArray;
+    };
+    function reverser(){
+            var x = document.getElementById("targeta");
+            x.innerHTML = reverse(document.getElementById('str').value);
+        }
+    </script>
+    <form name="mystring">
+        <input id="str" type="str" size="20">
+        <input type="button" value="Reverse" onClick="reverser();">
+    </form>
+    <br>
+    <div id="targeta"></div>
+    </body>
+    <br>
+    <br>
+    <body>
+        <h3> <font color="blue"> 2. First Twenty Multiples of the number </font></h3>
+        <p1> Please enter a number or use the arrows and click Generate Table</p1>
+        <script type="text/javascript">
+        function multiple(number){
+            list = [];
+            var finalvalue = '<table border="1">';
+            for (i = 1; i <= 20; i++) {list.push(number * i)};
+            for (i = 0; i < 20; i++){
+                if (i % 4 == 0) { 
+                    finalvalue = finalvalue +'<tr>'
+                };
+                finalvalue = finalvalue + '<td>' + list[i] + '</td>';
+                if (i % 4 == 3){
+                    finalvalue = finalvalue + '</tr>'};};
+            finalvalue = finalvalue + '</table>';
+            return finalvalue
+        };
+        function display(){
+            var y = document.getElementById("target");
+            y.innerHTML = multiple(document.getElementById('number').value);
+        }
+        </script>
+        <form name="myTable">
+            <input id="number" type="number" size="4">
+            <input type="button" value="Generate Table" onClick="display();">
+        </form>
+        <br>
+        <div id="target"></div>
+    </body>
+    <br>
+    <br>
+    <body>
+       
+            <form action="." method="GET" id="form" autocomplete="off">
+
+            <h3> <font color="blue"> 3. President’s height & weight</font> </h3>
+            <p1> Enter President Name:</p1>
+            <p><input id="search_text" type="text" placeholder="President Name Here" /></p>
+            <div id="presidents_table"></div>
+                
+
+            </form>
+
+        <script>
+            
+
+            $(document).ready(function() {
+               
+
+                var presidents_table_html_start = "<table id='the_presidents_table'><thead><tr><th>President</th><th>Height</th><th>Weight</th><th>BMI</th></tr></thead>";    
+
+                function update_president_table(search, search_terms = ""){
+                    var presidents_table_html = presidents_table_html_start;
+                    var matched = 0;
+                    $.each(search, function(id, html){
+                        if(id.includes(search_terms)){
+                            presidents_table_html += html;
+                            matched += 1;
+                        }
+                    });
+                    
+                    if (matched == 0){
+                        presidents_table_html += '<tr id="no_matches"><td colspan=4>No Matches</td></tr>';
+                    } 
+                    
+                    $('#presidents_table').html(presidents_table_html + '</table>');
+                }
+
+                
+                var search = {};
+                d3.csv("https://raw.githubusercontent.com/GabrielSantos33/DATA608_module5/main/presidents.csv").then(function(data) {
+                    var presidents_table_html = presidents_table_html_start;
+                    data.forEach(function(row) {
+                        var bmi = Math.round(row['Weight']/Math.pow(row['Height'], 2) * 703 ,1);
+                        var id = row['Name'].toLowerCase();
+                        var html = "<tr id='"+id+"' class='filterable'><td>" + row['Name'] + '</td><td>' + row['Height'] + '</td><td>' + row['Weight'] + '</td><td>' + bmi  + '</td></tr>';
+                        presidents_table_html += html;
+                        search[id] = html;
+                    });
+                    $('#presidents_table').html(presidents_table_html + '</table>');
+                });
+
+                
+                $('#search_text').keyup(function(){
+                    var search_terms = $(this).val().toLowerCase();
+                    update_president_table(search, search_terms);                        
+                });
+
+               
+                
+            });
+        </script>
+    </body>
+
+</html>
+
+<html lang="en">
+   <head>
+       <meta charset="utf-8">
+      <style>
+         table {
+         border-collapse: collapse;
+         border: 2px black solid;
+         font: 12px sans-serif;
+         }
+         td {
+         border: 1px black solid;
+         padding: 5px;
+         }
+      </style>
+</html>
