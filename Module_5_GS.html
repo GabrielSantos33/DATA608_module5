@@ -68,26 +68,17 @@
     <br>
     <br>
     <body>
-       
             <form action="." method="GET" id="form" autocomplete="off">
-
             <h3> <font color="blue"> 3. President’s height & weight</font> </h3>
             <p1> Enter President Name:</p1>
             <p><input id="search_text" type="text" placeholder="President Name Here" /></p>
             <div id="presidents_table"></div>
-                
-
             </form>
-
         <script>
             
-
             $(document).ready(function() {
-               
-
-                var presidents_table_html_start = "<table id='the_presidents_table'><thead><tr><th>President</th><th>Height</th><th>Weight</th><th>BMI</th></tr></thead>";    
-
-                function update_president_table(search, search_terms = ""){
+               var presidents_table_html_start = "<table id='the_presidents_table'><thead><tr><th>President</th><th>Height</th><th>Weight</th><th>BMI</th></tr></thead>";    
+               function update_president_table(search, search_terms = ""){
                     var presidents_table_html = presidents_table_html_start;
                     var matched = 0;
                     $.each(search, function(id, html){
@@ -103,9 +94,8 @@
                     
                     $('#presidents_table').html(presidents_table_html + '</table>');
                 }
-
                 
-                var search = {};
+               var search = {};
                 d3.csv("https://raw.githubusercontent.com/GabrielSantos33/DATA608_module5/main/presidents.csv").then(function(data) {
                     var presidents_table_html = presidents_table_html_start;
                     data.forEach(function(row) {
@@ -124,8 +114,6 @@
                     update_president_table(search, search_terms);                        
                 });
 
-               
-                
             });
         </script>
     </body>
